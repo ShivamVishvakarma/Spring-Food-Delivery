@@ -71,5 +71,10 @@ public class UserServiceImpl extends BaseDAO implements UserService {
             return false;
         }
     }
+
+    @Override
+    public int getTotalUsers() {
+        return userDAO.count();
+    }
 }
 

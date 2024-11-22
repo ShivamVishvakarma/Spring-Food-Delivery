@@ -163,12 +163,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
+
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
+
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         .checkbox-custom {
             width: 18px;
@@ -216,19 +228,43 @@
     </header>
 
    <nav class="navbar">
-           <s:url var="url_home" value="/seller/dashboard"/>
-           <s:url var="url_restaurants" value="/user/clist"/>
-           <s:url var="url_seller" value="/admin/sellers"/>
-           <s:url var="url_users" value="/admin/buyers"/>
-           <s:url var="url_reports" value="/admin/reports"/>
-           <s:url var="url_logout" value="/logout"/>
 
-           <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
-           <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
-           <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
-            <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
-           <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a>
-           <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+   <c:if test="${sessionScope.userId!=null && sessionScope.role == 1}">
+       <%-- Admin is logged in : Admin Menu --%>
+       <a href="<s:url value="/admin/dashboard"/>">Home</a>
+       <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
+        <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
+       <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
+       <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
+       <a href="${url_logout}">Logout</a>
+   </c:if>
+
+
+   <c:if test="${sessionScope.userId!=null && sessionScope.role == 3}">
+          <%-- Admin is logged in : Admin Menu --%>
+          <s:url var="url_home" value="/seller/dashboard"/>
+                     <s:url var="url_restaurants" value="/user/clist"/>
+                     <s:url var="url_seller" value="/admin/sellers"/>
+                     <s:url var="url_users" value="/admin/buyers"/>
+                     <s:url var="url_reports" value="/admin/reports"/>
+                     <s:url var="url_logout" value="/logout"/>
+
+          <a href="<s:url value="/seller/dashboard"/>">Home</a>
+          <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
+           <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
+          <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
+          <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
+          <a href="${url_logout}">Logout</a>
+      </c:if>
+
+
+
+         <%--   <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
+
+          <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a> --%>
+
+          <%-- <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a>
+           <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>  --%>
        </nav>
 
     <main class="main-content">
@@ -301,11 +337,14 @@
                                          <s:url var="url_add" value="/user/menu">
                                          <s:param name="cid" value="${c.contactId}"/>
                                          </s:url>
-
+                                         <s:url var="url_view" value="/seller/menu_list">
+                                            <s:param name="cid" value="${c.contactId}"/>
+                                          </s:url>
                                         <s:url var="url_del" value="/user/del_contact">
                                         <s:param name="cid" value="${c.contactId}"/>
                                        </s:url>
                                       <a href="${url_add}"><i class="fas fa-edit"></i> Add Menu</a>
+                                      <a href="${url_view}"><i class="fas fa-edit"></i> View Menu</a>
                                       <a href="${url_edit}"><i class="fas fa-edit"></i> Edit</a>
                                       <a href="${url_del}"><i class="fas fa-trash"></i> Delete</a>
                                      </c:if>

@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="f" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,13 +117,14 @@
             align-items: center;
         }
 
-        .profile-field i {
+        .profile-field i
+         {
             width: 30px;
             color: #667eea;
             margin-right: 1rem;
         }
 
-        .edit-profile-btn {
+        .edit-profile-btn{
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 0.8rem 1.5rem;
@@ -138,21 +141,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         @media (max-width: 768px) {
             .header h1 {
@@ -256,10 +262,12 @@
                     </div>
                 </div>
 
-              <s:url var="url_edit" value="/user/edit_contact">
-              <s:param name="cid" value="${c.contactId}"/>
-                 </s:url>
+
                 <button class="edit-profile-btn">
+                 <s:url var="url_edit" value="/user/edit_profile">
+                 <s:param name="userId" value="${user.userId}"/>
+                   </s:url>
+
                     <a href="${url_edit}"><i class="fas fa-edit"></i> Edit</a>
                 </button>
             </div>

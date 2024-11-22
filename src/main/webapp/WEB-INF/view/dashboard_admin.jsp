@@ -174,21 +174,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         @media (max-width: 768px) {
             .header h1 {
@@ -221,7 +224,7 @@
 
     <nav class="navbar">
         <s:url var="url_home" value="/admin/dashboard"/>
-        <s:url var="url_restaurants" value="/user/clist"/>
+        <s:url var="url_restaurants" value="/user/contactList"/>
         <s:url var="url_seller" value="/admin/sellers"/>
         <s:url var="url_users" value="/admin/buyers"/>
         <s:url var="url_reports" value="/admin/reports"/>
@@ -231,7 +234,7 @@
         <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
         <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
          <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
-        <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a>
+        <%-- <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a> --%>
         <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 
@@ -246,26 +249,26 @@
                 <div class="stat-card">
                     <i class="fas fa-store"></i>
                     <h3>Total Restaurants</h3>
-                    <p>25</p>
+                    <p>${totalRestaurants}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-users"></i>
                     <h3>Total Users</h3>
-                    <p>1,250</p>
+                    <p>${totalUsers}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>Total Orders</h3>
-                    <p>3,487</p>
+                    <p>${totalOrders}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-rupee-sign"></i>
                     <h3>Revenue</h3>
-                    <p>₹2,45,000</p>
+                    <p>₹0</p>
                 </div>
             </section>
 
-            <div class="restaurant-grid">
+           <%-- <div class="restaurant-grid">
                 <!-- Restaurant 1 -->
                 <div class="restaurant-card">
                     <div class="restaurant-image">
@@ -307,7 +310,7 @@
                         <button class="action-btn delete"><i class="fas fa-trash"></i> Remove</button>
                     </div>
                 </div>
-            </div>
+            </div> --%>
         </div>
     </main>
 

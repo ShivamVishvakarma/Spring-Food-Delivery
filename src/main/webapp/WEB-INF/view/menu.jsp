@@ -168,21 +168,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         .preview-image {
             max-width: 200px;
@@ -249,9 +252,8 @@
                 </c:if>
 
                 <s:url var="url_menu_save" value="/seller/save_menu"/>
-                <f:form action="testing1" modelAttribute="command">
-                    THIS FORM
-                    <div class="form-group">
+                <f:form action="${url_menu_save}?contactId=${param.cid}" modelAttribute="command">
+                        <div class="form-group">
                         <label for="itemName">Item Name</label>
                         <f:input path="menu.Itemname" id="itemName" cssClass="form-control"/>
                     </div>
@@ -276,6 +278,12 @@
                             <f:option value="Beverages">Beverages</f:option>
                         </f:select>
                     </div>
+                     <div class="form-group">
+                                        <label for="itemImage"><i class="fas fa-image"></i> Item Image</label>
+                                        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg" required>
+                                        <div id="imageError" class="error-message">Please upload only PNG, JPEG, or JPG files.</div>
+                                        <img id="imagePreview" src="/api/placeholder/200/200" alt="Preview" class="preview-image">
+                                    </div>
 
                     <button type="submit" class="register-btn">
                         <i class="fas fa-plus-circle"></i> Add Item

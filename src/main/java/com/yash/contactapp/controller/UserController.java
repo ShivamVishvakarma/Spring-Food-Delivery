@@ -2,8 +2,11 @@ package com.yash.contactapp.controller;
 
 import com.yash.contactapp.command.UserCommand;
 import com.yash.contactapp.command.LoginCommand;
+import com.yash.contactapp.dao.UserDAO;
+import com.yash.contactapp.domain.Contact;
 import com.yash.contactapp.domain.User;
 import com.yash.contactapp.exception.UserBlockedException;
+import com.yash.contactapp.service.ContactService;
 import com.yash.contactapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -20,10 +23,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ContactService contactService;
+
+    @Autowired
+    private UserDAO userDAO;
+
     @RequestMapping(value = {"/", "/index"})
     public String index(Model m) {
         m.addAttribute("command", new LoginCommand());
         return "index"; //JSP - /WEB-INF/view/index.jsp
+    }
+
+    @RequestMapping(value = {"/login"})
+    public String login(Model m) {
+        m.addAttribute("command", new LoginCommand());
+        return "login"; //JSP - /WEB-INF/view/index.jsp
     }
 
 
@@ -35,7 +50,7 @@ public class UserController {
                 //FAILED
                 //add error message and go back to login-form
                 m.addAttribute("err", "Login Failed! Enter valid credentials.");
-                return "index";//JSP - Login FORM
+                return "login";//JSP - Login FORM
             } else //SUCCESS
             //check the role and redirect to a appropriate dashboard
             {
@@ -56,7 +71,7 @@ public class UserController {
                 }else {
                     //add error message and go back to login-form
                     m.addAttribute("err", "Invalid User ROLE");
-                    return "index";//JSP - Login FORM
+                    return "login";//JSP - Login FORM
                 }
             }
         } catch (UserBlockedException ex) {
@@ -72,13 +87,16 @@ public class UserController {
         return "redirect:index?act=lo";
     }
 
-    @RequestMapping(value = "/user/dashboard")
-    public String userDashboard() {
-        return "dashboard_user"; //JSP
-    }
-
     @RequestMapping(value = "/admin/dashboard")
-    public String adminDashboard() {
+    public String adminDashboard(Model model ) {
+        int totalRestaurants = contactService.getTotalRestaurants();
+        int totalUsers = userService.getTotalUsers();
+       // int totalOrders = orderService.getTotalOrders();
+
+        model.addAttribute("totalRestaurants", totalRestaurants);
+        model.addAttribute("totalUsers", totalUsers);
+       // model.addAttribute("totalOrders", totalOrders);
+
         return "dashboard_admin"; //JSP
     }
 
@@ -126,6 +144,20 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/user/edit_profile")
+    public String prepareEditForm(Model m, HttpSession session, @RequestParam("userId") Integer userId) {
+        User command = userDAO.findById(userId);
+
+        // Add the user to the model with the correct attribute name
+        m.addAttribute("command", command);
+
+        // Store userId in session if needed
+        session.setAttribute("userId", userId);
+
+        return "reg_form";
+    }
+
+
     private void addUserInSession(User u, HttpSession session) {
         session.setAttribute("user", u);
         session.setAttribute("userId", u.getUserId());
@@ -162,11 +194,14 @@ public class UserController {
         }
         return "profile";
     }
-
-    @RequestMapping(value="/testing1")
-    public String checkWorking() {
-        System.out.println("inside testing controller");
-        return "index";
+    @GetMapping("/user/orders")
+    public String myOrders(HttpSession session, Model model) {
+        // Assuming user is stored in session
+        if(session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+        return "myorders";
     }
+
 
 }

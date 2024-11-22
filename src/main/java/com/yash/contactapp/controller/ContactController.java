@@ -1,6 +1,7 @@
 package com.yash.contactapp.controller;
 
 import com.yash.contactapp.domain.Contact;
+import com.yash.contactapp.domain.User;
 import com.yash.contactapp.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ContactController {
@@ -66,7 +68,7 @@ public class ContactController {
     public String contactList(Model m, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
         m.addAttribute("contactList", contactService.findUserContact(userId));
-        return "clist"; //JSP
+        return "clist";       //JSP
     }
 
     @RequestMapping(value = "/user/contact_search")
@@ -87,4 +89,25 @@ public class ContactController {
         contactService.delete(contactIds);
         return "redirect:clist?act=del";
     }
+
+    @RequestMapping(value = "/user/dashboard")
+    public String showDashboard(Model m, HttpSession session) {
+        if(session.getAttribute("userId") == null) {
+            return "redirect:/";
+        }
+
+        User user = (User) session.getAttribute("user");
+        List<Contact> contact = contactService.findAll();
+
+        m.addAttribute("contact", contact);
+        return "dashboard_user"; // JSP view name
+    }
+
+    @RequestMapping(value = "/user/contactList")
+    public String getcontactList(Model m) {
+        m.addAttribute("contactList", contactService.findAll());
+        return "clist"; // JSP
+    }
+
+
 }

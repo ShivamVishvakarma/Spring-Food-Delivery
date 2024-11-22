@@ -53,5 +53,15 @@ import java.util.List;
         public Contact findById(Integer cotactId) {
             return contactDAO.findById(cotactId);
         }
+
+        @Override
+        public List<Contact> findAll() {
+            return contactDAO.findAll();
+        }
+
+        @Override
+        public int getTotalRestaurants() {
+            return contactDAO.count();
+        }
     }
 

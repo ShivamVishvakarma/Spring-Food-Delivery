@@ -149,12 +149,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
+
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
+
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         .notification {
             position: fixed;

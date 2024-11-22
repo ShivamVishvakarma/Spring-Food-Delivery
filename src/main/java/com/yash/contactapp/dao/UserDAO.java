@@ -14,4 +14,5 @@ public interface UserDAO {
      public List<User> findAll();
      public List<User> findByProperty(String propName ,Object propValue );
 
+    int count();
 }

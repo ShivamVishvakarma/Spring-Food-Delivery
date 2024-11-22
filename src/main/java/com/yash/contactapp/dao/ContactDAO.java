@@ -13,4 +13,6 @@ public interface ContactDAO {
     public Contact findById(Integer contactId);
     public List<Contact> findAll();
     public List<Contact> findByProperty(String propName ,Object propValue );
+
+    int count();
 }

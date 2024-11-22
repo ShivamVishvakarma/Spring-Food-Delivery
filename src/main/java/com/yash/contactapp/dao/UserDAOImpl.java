@@ -96,4 +96,10 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         return getJdbcTemplate().query(sql, new UserRowMapper(), propValue);
 
     }
+
+    @Override
+    public int count() {
+        String sql = "SELECT COUNT(*) FROM user";
+        return getJdbcTemplate().queryForObject(sql, Integer.class);
+    }
 }

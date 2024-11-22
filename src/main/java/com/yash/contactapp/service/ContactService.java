@@ -21,4 +21,8 @@ public interface ContactService {
     public List<Contact> findUserContact(Integer userId, String txt);
 
     Contact findById(Integer cotactId);
+
+    List<Contact> findAll();
+
+    int getTotalRestaurants();
 }

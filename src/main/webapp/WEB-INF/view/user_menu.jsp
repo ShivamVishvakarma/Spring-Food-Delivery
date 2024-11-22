@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu List - Vegetable Delivery</title>
+    <title>Restaurant Menu - Food Delivery</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
        * {
@@ -97,8 +97,7 @@
            font-size: 1rem;
        }
 
-       .search-form button,
-       .add-menu-btn {
+       .search-form button {
            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
            color: white;
            padding: 0.8rem 1.5rem;
@@ -106,11 +105,9 @@
            border-radius: 5px;
            cursor: pointer;
            transition: transform 0.3s ease;
-           text-decoration: none;
        }
 
-       .search-form button:hover,
-       .add-menu-btn:hover {
+       .search-form button:hover {
            transform: translateY(-2px);
        }
 
@@ -137,57 +134,58 @@
            background-color: rgba(102, 126, 234, 0.05);
        }
 
-       .action-links a {
-           color: #667eea;
+       .add-to-cart-btn {
+           background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+           color: white;
+           padding: 0.5rem 1rem;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: all 0.3s ease;
            text-decoration: none;
-           margin-right: 1rem;
+           display: inline-flex;
+           align-items: center;
+           gap: 0.5rem;
        }
 
-       .action-links a:hover {
-           color: #764ba2;
+       .add-to-cart-btn:hover {
+           transform: translateY(-2px);
+           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
        }
 
-       .success {
-           background: #d4edda;
-           color: #155724;
-           padding: 1rem;
-           border-radius: 5px;
-           margin-bottom: 1rem;
+       .quantity-input {
+           width: 60px;
+           padding: 0.3rem;
+           border: 1px solid #ddd;
+           border-radius: 4px;
+           margin-right: 0.5rem;
        }
-
-       .error {
-           background: #f8d7da;
-           color: #721c24;
-           padding: 1rem;
-           border-radius: 5px;
-           margin-bottom: 1rem;
-       }
-
-      .footer {
-                              background: rgba(255, 255, 255, 0.1);
-                              color: white;
-                              text-align: center;
-                              padding: 1rem;
-                              margin-top: auto;
-                          }
-
-                          .footer a {
-                              color: white;
-                              text-decoration: none;
-                          }
-
-                          .footer a:hover {
-                              text-decoration: underline;
-                          }
-
-
-              }
 
        .menu-table img {
            max-width: 100px;
            border-radius: 5px;
            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
        }
+
+       .footer {
+                               background: rgba(255, 255, 255, 0.1);
+                               color: white;
+                               text-align: center;
+                               padding: 1rem;
+                               margin-top: auto;
+                           }
+
+                           .footer a {
+                               color: white;
+                               text-decoration: none;
+                           }
+
+                           .footer a:hover {
+                               text-decoration: underline;
+                           }
+
+
+               }
 
        @media (max-width: 768px) {
            .main-content {
@@ -221,12 +219,11 @@
                flex-direction: column;
            }
        }
-       }
     </style>
 </head>
 <body>
     <% if(session.getAttribute("userId")==null) {
-         response.sendRedirect("/vegetabledelivery/");
+         response.sendRedirect("/FoodDelivery/");
        }
     %>
 
@@ -235,30 +232,26 @@
     </header>
 
     <nav class="navbar">
-               <s:url var="url_home" value="/seller/dashboard"/>
-               <s:url var="url_restaurants" value="/user/clist"/>
-               <s:url var="url_seller" value="/admin/sellers"/>
-               <s:url var="url_users" value="/admin/buyers"/>
-               <s:url var="url_reports" value="/admin/reports"/>
-               <s:url var="url_logout" value="/logout"/>
+        <s:url var="url_home" value="/user/dashboard"/>
+        <s:url var="url_restaurants" value="/user/restaurants"/>
+        <s:url var="url_orders" value="/user/orders"/>
+        <s:url var="url_cart" value="/user/cart"/>
+        <s:url var="url_logout" value="/logout"/>
 
-               <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
-               <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
-               <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
-                <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
-
-               <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-           </nav>
-
-
+        <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
+       <%-- <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a> --%>
+        <a href="${url_orders}"><i class="fas fa-list"></i> My Orders</a>
+        <a href="${url_cart}"><i class="fas fa-shopping-cart"></i> Cart</a>
+        <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
 
     <main class="main-content">
         <div class="menu-container">
             <div class="menu-header">
                 <h3><i class="fas fa-utensils"></i> Menu Items</h3>
 
-                <form action="<s:url value="/seller/menu_search"/>" class="search-form">
-                    <input type="text" name="searchText" placeholder="Search menu items...">
+                <form action="<s:url value="/user/menu_search"/>" class="search-form">
+                    <input type="text" name="freeText" placeholder="Search menu items...">
                     <button type="submit"><i class="fas fa-search"></i> Search</button>
                 </form>
             </div>
@@ -272,19 +265,18 @@
             <table class="menu-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Item Name</th>
                         <th>Description</th>
                         <th>Price</th>
                         <th>Category</th>
                         <th>Image</th>
-                        <th>Actions</th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:if test="${empty menuList}">
                         <tr>
-                            <td colspan="7" class="error">
+                            <td colspan="6" class="error">
                                 <i class="fas fa-info-circle"></i> No Menu Items Found
                             </td>
                         </tr>
@@ -292,56 +284,84 @@
 
                     <c:forEach var="menu" items="${menuList}">
                         <tr>
-                            <td>${menu.menuId}</td>
                             <td>${menu.itemname}</td>
                             <td>${menu.description}</td>
                             <td>₹${menu.price}</td>
                             <td>${menu.foodCategory}</td>
                             <td>
                                 <c:if test="${not empty menu.image}">
-                                    <img src="${menu.image}" alt="Menu Item" style="max-width: 100px;">
+                                    <img src="${menu.image}" alt="Menu Item">
                                 </c:if>
                             </td>
-                            <td class="action-links">
-                                <a href="edit_menu?id=${menu.menuId}"><i class="fas fa-edit"></i> Edit</a>
-                                <a href="delete_menu?id=${menu.menuId}" onclick="return confirm('Are you sure?')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
-                                <c:if test="${user.role == 2}">
-                                                                         <form action="<s:url value='/user/add-to-cart'/>" method="POST" class="cart-control">
-                                                                             <input type="hidden" name="menuId" value="${menu.menuId}">
-                                                                             <input type="hidden" name="cid" value="${menu.contactId}"> <!-- Add this hidden input -->
-                                                                             <div class="quantity-control">
-                                                                                 <button type="button" onclick="decreaseQuantity(this)">-</button>
-                                                                                 <input type="number"
-                                                                                        name="quantity"
-                                                                                        value="1"
-                                                                                        min="1"
-                                                                                        class="quantity-input"
-                                                                                        readonly>
-                                                                                 <button type="button" onclick="increaseQuantity(this)">+</button>
-                                                                             </div>
-                                                                             <button type="submit" class="add-to-cart-btn">
-                                                                                 <i class="fas fa-cart-plus"></i> Add to Cart
-                                                                             </button>
-                                                                         </form>
-                                                                     </c:if>
+                            <td>
+
+
+                              <form action="<s:url value='/user/add-to-cart'/>" method="POST" class="cart-control">
+                                <input type="hidden" name="menuId" value="${menu.menuId}">
+                                  <input type="hidden" name="cid" value="${menu.contactId}"> <!-- Add this hidden input -->
+                              <div class="quantity-control">
+                                       <button type="button" onclick="decreaseQuantity(this)">-</button>
+                                         <input type="number"
+                                            name="quantity"
+                                              value="1"
+                                              min="1"
+                                              class="quantity-input"
+                                               readonly>
+                                             <button type="button" onclick="increaseQuantity(this)">+</button>
+                                           </div>
+                                            <button type="submit" class="add-to-cart-btn">
+                                             <i class="fas fa-cart-plus"></i> Add to Cart
+                                              </button>
+                                                </form>
+
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-           <s:url var="url_add" value="/user/menu">
-             <s:param name="cid" value="${c.contactId}"/>
-           </s:url>
-
-          <%--  <a href="${url_add}" class="add-menu-btn">
-                <i class="fas fa-plus"></i> Add New Menu Item
-            </a>  --%>
         </div>
     </main>
 
+     <script>
+                 document.addEventListener('DOMContentLoaded', function() {
+                       const successMessage = document.querySelector('.success-message');
+                       const errorMessage = document.querySelector('.message.error');
 
+                       if (successMessage) {
+                           setTimeout(function() {
+                               successMessage.style.opacity = '0';
+                               setTimeout(function() {
+                                   successMessage.remove();
+                               }, 500);
+                           }, 2500);
+                       }
+
+                       if (errorMessage) {
+                           setTimeout(function() {
+                               errorMessage.style.opacity = '0';
+                               setTimeout(function() {
+                                   errorMessage.remove();
+                               }, 500);
+                           }, 2500);
+                       }
+                   });
+
+                   function increaseQuantity(button) {
+                       const input = button.previousElementSibling;
+                       let value = parseInt(input.value);
+                       input.value = value + 1;
+                   }
+
+                   function decreaseQuantity(button) {
+                       const input = button.nextElementSibling;
+                       let value = parseInt(input.value);
+                       if (value > 1) {
+                           input.value = value - 1;
+                       }
+                   }
+
+
+             </script>
 
     <footer class="footer">
         <jsp:include page="include/footer.jsp"/>

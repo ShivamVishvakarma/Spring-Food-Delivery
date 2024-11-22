@@ -15,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class MenuController {
@@ -32,27 +34,25 @@ public class MenuController {
         return "menu";
     }
 
-
-
     @RequestMapping(value = "/seller/save_menu")
-    public String saveOrUpdateMenu(@ModelAttribute("command") MenuCommand command, Model m, HttpSession session) {
+    public String saveOrUpdateMenu(@ModelAttribute("command") MenuCommand command, @RequestParam String contactId, Model m, HttpSession session) {
         System.out.println("inside save or update controller");
+
         try {
             if (command == null || command.getMenu() == null) {
                 throw new RuntimeException("Form data not properly bound");
             }
-
+           // System.out.println("label1");
             Menu menu = command.getMenu();
-            System.out.println("menu: " + menu);
             Integer menuId = (Integer) session.getAttribute("menuId");
-            Integer contactId = (Integer) session.getAttribute("aContactId");
-
+            //System.out.println("menuId: " + menuId);
+            //System.out.println("contactId" + contactId);
             if (contactId == null) {
                 m.addAttribute("err", "No contact ID found in session");
                 return "menu";
             }
+            menu.setContactId(Integer.valueOf(contactId));
 
-            menu.setContactId(contactId);
 
             if (menuId == null) {
                 // Save new menu item
@@ -66,14 +66,31 @@ public class MenuController {
                 m.addAttribute("message", "Menu item updated successfully");
             }
 
-            return "redirect:menu_list";
+            return "menu_list";
 
         } catch (Exception e) {
             e.printStackTrace();
             m.addAttribute("err", "Failed to process menu item: " + e.getMessage());
             return "menu";
         }
+
     }
+    @RequestMapping(value = "/seller/menu_list")
+    public String menuList(Model m,HttpSession session , @RequestParam("cid") Integer cid) {
+        List<Menu> menus = menuService.findByContactId(cid);
+        m.addAttribute("menuList", menus);
+        return "menu_list"; // This will be your JSP/view name
+    }
+
+    @RequestMapping(value = "/user/menu_list")
+    public String usermenuList(Model m,HttpSession session , @RequestParam("cid") Integer cid) {
+        List<Menu> menus = menuService.findByContactId(cid);
+        m.addAttribute("menuList", menus);
+        return "user_menu"; // This will be your JSP/view name
+    }
+
+
+
 }
 
 

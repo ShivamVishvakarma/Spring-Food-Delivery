@@ -73,4 +73,10 @@ public class ContactDAOImpl extends BaseDAO implements ContactDAO {
         return getJdbcTemplate().query(sql, new ContactRowMapper(), propValue);
     }
 
+    @Override
+    public int count() {
+        String sql = "SELECT COUNT(*) FROM contact";
+        return getJdbcTemplate().queryForObject(sql, Integer.class);
+    }
+
 }

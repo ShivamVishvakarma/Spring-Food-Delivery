@@ -376,21 +376,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         #id_res_div {
             margin-top: 0.5rem;
@@ -461,9 +464,9 @@
     <nav class="navbar">
         <s:url var="url_index" value="/index"/>
         <a href="${url_index}"><i class="fas fa-home"></i> Home</a>
-        <a href="${url_index}"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <%--  <a href="${url_index}"><i class="fas fa-sign-in-alt"></i> Login</a>
         <a href="#"><i class="fas fa-info-circle"></i> About</a>
-        <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+        <a href="#"><i class="fas fa-question-circle"></i> Help</a> --%>
     </nav>
 
     <main class="main-content">

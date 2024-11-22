@@ -157,21 +157,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         @media (max-width: 768px) {
             .main-content {
@@ -256,6 +259,111 @@
             </f:form>
         </div>
     </main>
+
+    <script>
+    $(document).ready(function (){
+        // Validation function for form fields
+        function validateField(field, validationFunc) {
+            const value = $(field).val();
+            const errorDiv = $(field).next('.error');
+            errorDiv.remove(); // Clear previous error message
+
+            const errorMessage = validationFunc(value);
+            if (errorMessage) {
+                $(field).after('<div class="error" style="color: red; margin-top: 5px;">' + errorMessage + '</div>');
+                return false;
+            }
+            return true;
+        }
+
+        // Validation functions
+        function validateRestaurantName(name) {
+            if (name.trim() === "") {
+                return "Restaurant name is required.";
+            }
+            if (name.length < 3) {
+                return "Restaurant name must be at least 3 characters long.";
+            }
+            if (!/^[A-Za-z0-9\s]+$/.test(name)) {
+                return "Restaurant name can only contain letters, numbers, and spaces.";
+            }
+            return null;
+        }
+
+        function validatePhone(phone) {
+            if (phone.trim() === "") {
+                return "Contact number is required.";
+            }
+            if (!/^\d{10}$/.test(phone)) {
+                return "Contact number must be exactly 10 digits.";
+            }
+            return null;
+        }
+
+        function validateEmail(email) {
+            if (email.trim() === "") {
+                return "Email is required.";
+            }
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yash\.com)$/;
+            if (!emailPattern.test(email)) {
+                return "Please enter a valid email from allowed domains (gmail.com,yash.com).";
+            }
+            return null;
+        }
+
+        function validateAddress(address) {
+            if (address.trim() === "") {
+                return "Restaurant address is required.";
+            }
+            if (address.length < 10) {
+                return "Address must be at least 10 characters long.";
+            }
+            return null;
+        }
+
+        // Prevent non-numeric input in phone field
+        $("input[name='phone']").on('keypress', function(e) {
+            if (e.which < 48 || e.which > 57) {
+                e.preventDefault();
+            }
+        });
+
+        // Live validation on keyup/change
+        $("input[name='name']").on('keyup', function() {
+            validateField(this, validateShopName);
+        });
+
+        $("input[name='phone']").on('keyup', function() {
+            validateField(this, validatePhone);
+        });
+
+        $("input[name='email']").on('keyup', function() {
+            validateField(this, validateEmail);
+        });
+
+        $("textarea[name='address']").on('keyup', function() {
+            validateField(this, validateAddress);
+        });
+
+        // Form submission validation
+        $("form").submit(function(event) {
+            let isValid = true;
+
+            // Validate all fields
+            isValid &= validateField($("input[name='name']"), validateRestaurantName);
+            isValid &= validateField($("input[name='phone']"), validatePhone);
+            isValid &= validateField($("input[name='email']"), validateEmail);
+            isValid &= validateField($("textarea[name='address']"), validateAddress);
+
+            if (!isValid) {
+                event.preventDefault(); // Prevent form submission
+                // Optional: Scroll to the first error
+                $('html, body').animate({
+                    scrollTop: $(".error").first().offset().top - 100
+                }, 500);
+            }
+        });
+    });
 
     <footer class="footer">
         <p>&copy; 2024-2025 <a href="http://yash.com" target="_blank">YASH TECHNOLOGIES PVT LTD</a> | All Rights Reserved</p>

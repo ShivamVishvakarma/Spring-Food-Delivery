@@ -304,26 +304,26 @@
                 <div class="stat-card">
                     <i class="fas fa-store"></i>
                     <h3>Total Restaurants</h3>
-                    <p>3</p>
+                    <p>2</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>Active Orders</h3>
-                    <p>8</p>
+                    <p>0</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-chart-line"></i>
                     <h3>Today's Revenue</h3>
-                    <p>₹12,500</p>
+                    <p>₹0</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-star"></i>
                     <h3>Average Rating</h3>
-                    <p>4.5</p>
+                    <p>0</p>
                 </div>
             </section>
 
-            <div class="restaurant-grid">
+          <%--  <div class="restaurant-grid">
                 <!-- Restaurant 1 -->
                 <div class="restaurant-card">
                     <div class="restaurant-image">
@@ -371,7 +371,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --%>
         </div>
     </main>
 

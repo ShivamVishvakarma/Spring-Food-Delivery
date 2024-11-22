@@ -9,10 +9,10 @@ public class Menu {
     private String  Itemname;
     private String description;
     private double price;
-    private Integer foodCategory;
+    private String foodCategory;
     private Blob image;
 
-    public Menu(Integer menuId, Integer contactId, String Itemname, String description, double price, Integer foodCategory, Blob image) {
+    public Menu(Integer menuId, Integer contactId, String Itemname, String description, double price, String foodCategory, Blob image) {
         this.menuId = menuId;
         this.contactId = contactId;
         this.Itemname = Itemname;
@@ -67,11 +67,11 @@ public class Menu {
         this.price = price;
     }
 
-    public Integer getFoodCategory() {
+    public String getFoodCategory() {
         return foodCategory;
     }
 
-    public void setFoodCategory(Integer foodCategory) {
+    public void setFoodCategory(String foodCategory) {
         this.foodCategory = foodCategory;
     }
 
@@ -84,6 +84,16 @@ public class Menu {
         this.image = image;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuId=" + menuId +
+                ", contactId=" + contactId +
+                ", Itemname='" + Itemname + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", foodCategory=" + foodCategory +
+                ", image=" + image +
+                '}';
+    }
 }

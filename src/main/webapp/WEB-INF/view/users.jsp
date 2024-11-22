@@ -149,12 +149,24 @@
         }
 
         .footer {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
+                                background: rgba(255, 255, 255, 0.1);
+                                color: white;
+                                text-align: center;
+                                padding: 1rem;
+                                margin-top: auto;
+                            }
+
+                            .footer a {
+                                color: white;
+                                text-decoration: none;
+                            }
+
+                            .footer a:hover {
+                                text-decoration: underline;
+                            }
+
+
+                }
 
         .notification {
             position: fixed;
@@ -218,7 +230,7 @@
             <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
             <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
              <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
-            <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a>
+
             <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
 

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -151,6 +152,66 @@
             color: #666;
             margin-bottom: 1rem;
         }
+        .restaurant-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 2rem;
+                    padding: 1rem;
+                }
+
+                .restaurant-card {
+                    background: white;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.3s ease;
+                }
+
+                .restaurant-card:hover {
+                    transform: translateY(-5px);
+                }
+
+                .restaurant-image {
+                    width: 100%;
+                    height: 200px;
+                    background-color: #f0f0f0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .restaurant-details {
+                    padding: 1.5rem;
+                }
+
+                .restaurant-details h3 {
+                    color: #333;
+                    margin-bottom: 0.5rem;
+                }
+
+                .restaurant-info {
+                    color: #666;
+                    margin-bottom: 1rem;
+                }
+
+                .view-menu-btn {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 0.8rem 1.5rem;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    width: 100%;
+                    font-size: 1rem;
+                    transition: transform 0.3s ease;
+                    text-decoration: none;
+                    display: inline-block;
+                    text-align: center;
+                }
+
+                .view-menu-btn:hover {
+                    transform: translateY(-2px);
+                }
 
         .order-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -224,12 +285,13 @@
                         text-decoration: underline;
                     }
 
+
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1><i class="fas fa-utensils"></i> Online Food Delivery</h1>
+        <h1><i class="fa-solid fa-burger"></i> Online Food Delivery</h1>
     </header>
 
     <nav class="navbar">
@@ -255,99 +317,48 @@
                 <div class="stat-card">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>Total Orders</h3>
-                    <p>12</p>
+                    <p>0</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-heart"></i>
                     <h3>Favorites</h3>
-                    <p>5</p>
+                    <p>0</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-wallet"></i>
                     <h3>Wallet Balance</h3>
-                    <p>₹500</p>
+                    <p>₹0</p>
                 </div>
             </section>
 
             <div class="food-items-grid">
-                <!-- Food Item 1 -->
-                <div class="food-card">
-                    <div class="food-image">
-                        <i class="fas fa-pizza-slice"></i>
-                    </div>
-                    <div class="food-details">
-                        <h3>Margherita Pizza</h3>
-                        <p class="food-description">Classic pizza with tomato sauce, mozzarella, and basil</p>
-                        <p class="food-price">₹299</p>
-                        <button class="order-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </div>
-                </div>
+                              <c:forEach var="contact" items="${contact}">
+                                  <div class="food-card">
+                                      <div class="food-image">
+                                          <i class="fas fa-store"></i>
+                                      </div>
+                                      <div class="food-details">
+                                          <h3>${contact.name}</h3>
+                                          <p class="food-description">
+                                              <i class="fas fa-map-marker-alt"></i> ${contact.address}
+                                          </p>
+                                          <p class="food-description">
+                                              <i class="fas fa-phone"></i> ${contact.phone}<br>
+                                              <i class="fas fa-envelope"></i> ${contact.email}
+                                          </p>
+                                         <div class="food-details">
 
-                <!-- Food Item 2 -->
-                <div class="food-card">
-                    <div class="food-image">
-                        <i class="fas fa-hamburger"></i>
-                    </div>
-                    <div class="food-details">
-                        <h3>Classic Burger</h3>
-                        <p class="food-description">Juicy beef patty with fresh vegetables and special sauce</p>
-                        <p class="food-price">₹199</p>
-                        <button class="order-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Food Item 3 -->
-                <div class="food-card">
-                    <div class="food-image">
-                        <i class="fas fa-drumstick-bite"></i>
-                    </div>
-                    <div class="food-details">
-                        <h3>Butter Chicken</h3>
-                        <p class="food-description">Creamy butter chicken with naan bread</p>
-                        <p class="food-price">₹349</p>
-                        <button class="order-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Food Item 4 -->
-                <div class="food-card">
-                    <div class="food-image">
-                        <i class="fas fa-fish"></i>
-                    </div>
-                    <div class="food-details">
-                        <h3>Grilled Fish</h3>
-                        <p class="food-description">Fresh grilled fish with herbs and lemon</p>
-                        <p class="food-price">₹399</p>
-                        <button class="order-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Food Item 5 -->
-                <div class="food-card">
-                    <div class="food-image">
-                        <i class="fas fa-ice-cream"></i>
-                    </div>
-                    <div class="food-details">
-                        <h3>Ice Cream Sundae</h3>
-                        <p class="food-description">Assorted ice cream flavors with toppings</p>
-                        <p class="food-price">₹149</p>
-                        <button class="order-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Food Item 6 -->
-                <div class="food-card">
-                    <div class="food-image">
-                        <i class="fas fa-coffee"></i>
-                    </div>
-                    <div class="food-details">
-                        <h3>Cold Coffee</h3>
-                        <p class="food-description">Refreshing cold coffee with ice cream</p>
-                        <p class="food-price">₹129</p>
-                        <button class="order-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </div>
-                </div>
-            </div>
+                                             <s:url var="url_view" value="/user/menu_list">
+                                             <s:param name="cid" value="${contact.contactId}"/>
+                                               </s:url>
+                                             <a href="${url_view}" class="order-btn">
+                                                 <i class="fas fa-utensils"></i> View Menu
+                                             </a>
+                                         </div>
+                                      </div>
+                                  </div>
+                              </c:forEach>
+                          </div>
         </div>
     </main>
 
