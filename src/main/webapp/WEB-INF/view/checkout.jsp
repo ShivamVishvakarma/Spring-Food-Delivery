@@ -442,6 +442,9 @@
                     alert('Please enter a valid UPI ID (e.g., name@upi)');
                     return;
                 }
+            }
+        });
+    </script>
 
                 </body>
                 </html>

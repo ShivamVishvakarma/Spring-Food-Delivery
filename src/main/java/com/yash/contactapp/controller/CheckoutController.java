@@ -2,9 +2,11 @@ package com.yash.contactapp.controller;
 
 import com.yash.contactapp.domain.Cart;
 import com.yash.contactapp.domain.Order;
+import com.yash.contactapp.domain.Restaurant;
 import com.yash.contactapp.domain.User;
 import com.yash.contactapp.service.CartService;
 import com.yash.contactapp.service.OrderService;
+import com.yash.contactapp.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -25,51 +28,79 @@ public class CheckoutController {
     private CartService cartService;
 
 
-        @GetMapping("/user/checkout")
-        public String showCheckout(Model model, HttpSession session) {
-            User user = (User) session.getAttribute("user");
-            if (user == null) {
-                return "redirect:/login";
-            }
+    @Autowired
+    private RestaurantService restaurantService; // Add this
 
+    @GetMapping("/user/checkout")
+    public String showCheckout(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        List<Cart> cartItems = cartService.getCartItems(user.getUserId());
+        if (cartItems.isEmpty()) {
+            return "redirect:/user/cart";
+        }
+
+        // Get restaurant details from the first cart item
+        if (!cartItems.isEmpty()) {
+            Integer contactId = cartItems.get(0).getMenu().getContactId();
+            Restaurant restaurant = restaurantService.findById(contactId);
+            model.addAttribute("restaurant", restaurant);
+        }
+
+        // Calculate subtotal
+        double subtotal = cartItems.stream()
+                .mapToDouble(cart -> cart.getMenu().getPrice() * cart.getQuantity())
+                .sum();
+
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("subtotal", subtotal);
+        model.addAttribute("checkout", new Order());
+        return "checkout";
+    }
+
+    @PostMapping("/user/checkout")
+    public String processCheckout(@ModelAttribute("checkout") Order order,
+                                  HttpSession session,
+                                  RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        try {
             List<Cart> cartItems = cartService.getCartItems(user.getUserId());
             if (cartItems.isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Your cart is empty");
                 return "redirect:/user/cart";
             }
 
-            // Calculate subtotal
+            // Set additional order details
+            order.setUserId(user.getUserId());
+            order.setOrderStatus("PENDING");
+            order.setOrderDate(new Date());
+
+            // Calculate total amount including delivery charge
             double subtotal = cartItems.stream()
                     .mapToDouble(cart -> cart.getMenu().getPrice() * cart.getQuantity())
                     .sum();
+            order.setTotalAmount(subtotal + 40.0); // Adding delivery charge
 
-            model.addAttribute("cartItems", cartItems);
-            model.addAttribute("subtotal", subtotal);
-            model.addAttribute("checkout", new Order());
-            return "checkout";
+            // Place order and clear cart
+            Integer orderId = orderService.placeOrder(order, cartItems);
+            cartService.clearCart(user.getUserId());
+
+            redirectAttributes.addFlashAttribute("message",
+                    "Order placed successfully! Your order ID is: " + orderId);
+            return "redirect:/user/orders";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                    "Failed to place order: " + e.getMessage());
+            return "redirect:/user/checkout";
         }
-
-        @PostMapping("/user/checkout")
-        public String processCheckout(@ModelAttribute("checkout") Order order,
-                                      HttpSession session,
-                                      RedirectAttributes redirectAttributes) {
-            User user = (User) session.getAttribute("user");
-            if (user == null) {
-                return "redirect:/login";
-            }
-
-            try {
-                List<Cart> cartItems = cartService.getCartItems(user.getUserId());
-                order.setUserId(user.getUserId());
-                Integer orderId = orderService.placeOrder(order, cartItems);
-                redirectAttributes.addFlashAttribute("message",
-                        "Order placed successfully! Your order ID is: " + orderId);
-                return "redirect:/user/orders";
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("error",
-                        "Failed to place order: " + e.getMessage());
-                return "redirect:/user/checkout";
-            }
-        }
+    }
 
         @GetMapping("/users/orders")
         public String viewOrders(Model model, HttpSession session) {
