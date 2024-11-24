@@ -1,7 +1,7 @@
 package com.yash.contactapp.dao;
 
-import com.yash.contactapp.domain.Contact;
-import com.yash.contactapp.rm.ContactRowMapper;
+import com.yash.contactapp.domain.Restaurant;
+import com.yash.contactapp.rm.RestaurantRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ContactDAOImpl extends BaseDAO implements ContactDAO {
+public class RestaurantDAOImpl extends BaseDAO implements RestaurantDAO {
 
     @Override
-    public void save(Contact c) {
+    public void save(Restaurant c) {
         String sql = "INSERT INTO contact(userId, name, phone, email, address, remark) VALUES(:userId, :name, :phone, :email, :address, :remark)";
         Map m = new HashMap();
         m.put("userId", c.getUserId());
@@ -32,7 +32,7 @@ public class ContactDAOImpl extends BaseDAO implements ContactDAO {
     }
 
     @Override
-    public void update(Contact c) {
+    public void update(Restaurant c) {
         String sql = "UPDATE contact SET name=:name, phone=:phone, email=:email, address=:address, remark=:remark WHERE contactId=:contactId";
         Map m = new HashMap();
         m.put("contactId", c.getContactId());
@@ -45,7 +45,7 @@ public class ContactDAOImpl extends BaseDAO implements ContactDAO {
     }
 
     @Override
-    public void delete(Contact c) {
+    public void delete(Restaurant c) {
         this.delete(c.getContactId());
     }
 
@@ -56,21 +56,21 @@ public class ContactDAOImpl extends BaseDAO implements ContactDAO {
     }
 
     @Override
-    public Contact findById(Integer contactId) {
+    public Restaurant findById(Integer contactId) {
         String sql = "SELECT contactId, userId, name, phone, email, address, remark FROM contact WHERE contactId=?";
-        return getJdbcTemplate().queryForObject(sql, new ContactRowMapper(), contactId);
+        return getJdbcTemplate().queryForObject(sql, new RestaurantRowMapper(), contactId);
     }
 
     @Override
-    public List<Contact> findAll() {
+    public List<Restaurant> findAll() {
         String sql = "SELECT contactId, userId, name, phone, email, address, remark FROM contact";
-        return getJdbcTemplate().query(sql, new ContactRowMapper());
+        return getJdbcTemplate().query(sql, new RestaurantRowMapper());
     }
 
     @Override
-    public List<Contact> findByProperty(String propName, Object propValue) {
+    public List<Restaurant> findByProperty(String propName, Object propValue) {
         String sql = "SELECT contactId, userId, name, phone, email, address, remark FROM contact WHERE "+propName+"=?";
-        return getJdbcTemplate().query(sql, new ContactRowMapper(), propValue);
+        return getJdbcTemplate().query(sql, new RestaurantRowMapper(), propValue);
     }
 
     @Override

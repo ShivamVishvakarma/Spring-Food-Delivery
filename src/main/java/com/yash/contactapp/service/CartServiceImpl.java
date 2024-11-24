@@ -41,8 +41,17 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> getCartItems(Integer userId) {
-        return cartDAO.findCartItemsByUserId(userId);
+        List<Cart> cartItems= cartDAO.findCartItemsByUserId(userId);
+        for (Cart cart : cartItems) {
+            if (cart.getMenu() == null && cart.getMenuId() != null) {
+                Menu menu = menuDAO.findById(cart.getMenuId());
+                cart.setMenu(menu);
+            }
+        }
+        return cartItems;
     }
+
+
 
     @Override
     public void updateCartItemQuantity(Integer cart_id, Integer quantity) {

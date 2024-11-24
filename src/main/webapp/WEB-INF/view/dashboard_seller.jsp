@@ -280,10 +280,13 @@
         <s:url var="url_orders" value="/seller/orders"/>
         <s:url var="url_profile" value="/user/profile"/>
         <s:url var="url_logout" value="/logout"/>
+        <s:url var="url_restaurants" value="/user/clist"/>
 
         <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
+         <a href="${url_restaurants}"><i class="fas fa-user"></i> Restaurants</a>
         <a href="${url_orders}"><i class="fas fa-shopping-bag"></i> Orders</a>
         <a href="${url_profile}"><i class="fas fa-user"></i> Profile</a>
+
         <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 

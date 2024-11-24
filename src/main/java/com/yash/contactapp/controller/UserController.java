@@ -3,10 +3,9 @@ package com.yash.contactapp.controller;
 import com.yash.contactapp.command.UserCommand;
 import com.yash.contactapp.command.LoginCommand;
 import com.yash.contactapp.dao.UserDAO;
-import com.yash.contactapp.domain.Contact;
 import com.yash.contactapp.domain.User;
 import com.yash.contactapp.exception.UserBlockedException;
-import com.yash.contactapp.service.ContactService;
+import com.yash.contactapp.service.RestaurantService;
 import com.yash.contactapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -24,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private ContactService contactService;
+    private RestaurantService restaurantService;
 
     @Autowired
     private UserDAO userDAO;
@@ -89,7 +87,7 @@ public class UserController {
 
     @RequestMapping(value = "/admin/dashboard")
     public String adminDashboard(Model model ) {
-        int totalRestaurants = contactService.getTotalRestaurants();
+        int totalRestaurants = restaurantService.getTotalRestaurants();
         int totalUsers = userService.getTotalUsers();
        // int totalOrders = orderService.getTotalOrders();
 
@@ -136,7 +134,7 @@ public class UserController {
                 user.setLoginStatus(UserService.LOGIN_STATUS_ACTIVE);
             }
             userService.register(user);
-            return "redirect:index?act=reg"; //Login Page
+            return "redirect:login?act=reg"; //Login Page
         } catch (DuplicateKeyException e) {
             e.printStackTrace();
             m.addAttribute("err", "Username is already registered. Please select another username.");

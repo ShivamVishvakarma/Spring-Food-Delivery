@@ -196,8 +196,17 @@
     </header>
 
     <nav class="navbar">
-        <s:url var="url_home" value="/user/dashboard"/>
-        <s:url var="url_orders" value="/user/orders"/>
+    <c:if test="${sessionScope.userId!=null && sessionScope.role == 0}">
+        <%-- General User is logged in : Seller Menu --%>
+        <s:url var="url_uhome" value="/user/contact_form"/>
+        <s:url var="url_cform" value="/user/contact_form"/>
+        <s:url var="url_clist" value="/user/clist"/>
+        <a href="${url_uhome}">Restaurant Registration</a> | <a href="${url_cform}">Add Contact</a> |<a href="${url_clist}">Contact List</a>| <a href="${url_logout}">Logout</a>
+    </c:if>
+
+ <c:if test="${sessionScope.userId!=null && sessionScope.role == 3}">
+        <s:url var="url_home" value="/seller/dashboard"/>
+        <s:url var="url_orders" value="/seller/orders"/>
         <s:url var="url_profile" value="/user/profile"/>
         <s:url var="url_logout" value="/logout"/>
 
@@ -205,6 +214,7 @@
         <a href="${url_orders}"><i class="fas fa-shopping-bag"></i> My Orders</a>
         <a href="${url_profile}"><i class="fas fa-user"></i> Profile</a>
         <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </c:if>
     </nav>
 
     <main class="main-content">

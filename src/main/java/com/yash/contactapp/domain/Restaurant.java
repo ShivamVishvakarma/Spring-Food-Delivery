@@ -1,9 +1,7 @@
 package com.yash.contactapp.domain;
 
-import javax.persistence.Entity;
 
-
-public class Contact {
+public class Restaurant {
     private Integer contactId; // PK
     private Integer userId; // FK
     private String name;
@@ -12,7 +10,7 @@ public class Contact {
     private String address;
     private String remark;
 
-    public Contact() {};
+    public Restaurant() {};
 
     public Integer getContactId() {
         return contactId;

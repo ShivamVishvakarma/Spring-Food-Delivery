@@ -231,17 +231,21 @@
 
    <c:if test="${sessionScope.userId!=null && sessionScope.role == 1}">
        <%-- Admin is logged in : Admin Menu --%>
-       <a href="<s:url value="/admin/dashboard"/>">Home</a>
+       <s:url var="url_home" value="/admin/dashboard"/>
+       <s:url var="url_seller" value="/admin/sellers"/>
+        <s:url var="url_users" value="/admin/buyers"/>
+
+       <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
        <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
-        <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
+        <a href="${url_users}"><i class="fas fa-users"></i> Buyers</a>
        <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
-       <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
-       <a href="${url_logout}">Logout</a>
+
+       <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
    </c:if>
 
 
    <c:if test="${sessionScope.userId!=null && sessionScope.role == 3}">
-          <%-- Admin is logged in : Admin Menu --%>
+          <%-- Seller is logged in : Seller Menu --%>
           <s:url var="url_home" value="/seller/dashboard"/>
                      <s:url var="url_restaurants" value="/user/clist"/>
                      <s:url var="url_seller" value="/admin/sellers"/>
@@ -249,11 +253,11 @@
                      <s:url var="url_reports" value="/admin/reports"/>
                      <s:url var="url_logout" value="/logout"/>
 
-          <a href="<s:url value="/seller/dashboard"/>">Home</a>
+          <a href="<s:url value="/seller/dashboard"/>"><i class="fas fa-home"></i> Home</a>
           <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
            <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
           <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
-          <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
+
           <a href="${url_logout}">Logout</a>
       </c:if>
 

@@ -1,9 +1,9 @@
 package com.yash.contactapp.service;
 
 import com.yash.contactapp.dao.BaseDAO;
-import com.yash.contactapp.dao.ContactDAO;
-import com.yash.contactapp.domain.Contact;
-import com.yash.contactapp.rm.ContactRowMapper;
+import com.yash.contactapp.dao.RestaurantDAO;
+import com.yash.contactapp.domain.Restaurant;
+import com.yash.contactapp.rm.RestaurantRowMapper;
 import com.yash.contactapp.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,24 +11,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
     @Service
-    public class ContactServiceImpl extends BaseDAO implements ContactService {
+    public class RestaurantServiceImpl extends BaseDAO implements RestaurantService {
 
         @Autowired
-        private ContactDAO contactDAO;
+        private RestaurantDAO restaurantDAO;
 
         @Override
-        public void save(Contact c) {
-            contactDAO.save(c);
+        public void save(Restaurant c) {
+            restaurantDAO.save(c);
         }
 
         @Override
-        public void update(Contact c) {
-            contactDAO.update(c);
+        public void update(Restaurant c) {
+            restaurantDAO.update(c);
         }
 
         @Override
         public void delete(Integer cotactId) {
-            contactDAO.delete(cotactId);
+            restaurantDAO.delete(cotactId);
         }
 
         @Override
@@ -39,29 +39,29 @@ import java.util.List;
         }
 
         @Override
-        public List<Contact> findUserContact(Integer userId) {
-            return contactDAO.findByProperty("userId", userId);
+        public List<Restaurant> findUserContact(Integer userId) {
+            return restaurantDAO.findByProperty("userId", userId);
         }
 
         @Override
-        public List<Contact> findUserContact(Integer userId, String txt) {
+        public List<Restaurant> findUserContact(Integer userId, String txt) {
             String sql = "SELECT contactId, userId, name, phone, email, address, remark FROM contact WHERE userId=? AND (name LIKE '%" + txt + "%' OR address LIKE '%" + txt + "%' OR phone LIKE '%" + txt + "%' OR email LIKE '%" + txt + "%' OR remark LIKE '%" + txt + "%')";
-            return getJdbcTemplate().query(sql, new ContactRowMapper(), userId);
+            return getJdbcTemplate().query(sql, new RestaurantRowMapper(), userId);
         }
 
         @Override
-        public Contact findById(Integer cotactId) {
-            return contactDAO.findById(cotactId);
+        public Restaurant findById(Integer cotactId) {
+            return restaurantDAO.findById(cotactId);
         }
 
         @Override
-        public List<Contact> findAll() {
-            return contactDAO.findAll();
+        public List<Restaurant> findAll() {
+            return restaurantDAO.findAll();
         }
 
         @Override
         public int getTotalRestaurants() {
-            return contactDAO.count();
+            return restaurantDAO.count();
         }
     }
 

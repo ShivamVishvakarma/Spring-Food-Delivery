@@ -219,6 +219,23 @@
     </header>
 
    <nav class="navbar">
+
+   <c:if test="${sessionScope.userId!=null && sessionScope.role == 1}">
+          <%-- Admin is logged in : Admin Menu --%>
+          <s:url var="url_home" value="/admin/dashboard"/>
+          <s:url var="url_seller" value="/admin/sellers"/>
+           <s:url var="url_users" value="/admin/buyers"/>
+           <s:url var="url_restaurants" value="/user/contactList"/>
+
+          <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
+          <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
+           <a href="${url_users}"><i class="fas fa-users"></i> Buyers</a>
+          <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
+
+          <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </c:if>
+
+ <c:if test="${sessionScope.userId!=null && sessionScope.role == 3}">
            <s:url var="url_home" value="/admin/dashboard"/>
            <s:url var="url_restaurants" value="/user/clist"/>
            <s:url var="url_seller" value="/admin/sellers"/>
@@ -228,10 +245,11 @@
 
            <a href="${url_home}"><i class="fas fa-home"></i> Home</a>
            <a href="${url_restaurants}"><i class="fas fa-store"></i> Restaurants</a>
+            <a href="${url_users}"><i class="fas fa-users"></i> Buyers</a>
            <a href="${url_seller}"><i class="fas fa-users"></i> Sellers</a>
-            <a href="${url_users}"><i class="fas fa-users"></i> Buyer</a>
-           <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a>
+          <%-- <a href="${url_reports}"><i class="fas fa-chart-bar"></i> Reports</a> --%>
            <a href="${url_logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </c:if>
        </nav>
 
     <main class="main-content">

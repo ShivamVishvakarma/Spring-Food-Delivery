@@ -4,15 +4,12 @@ package com.yash.contactapp.dao;
 import com.yash.contactapp.domain.Cart;
 
 import com.yash.contactapp.rm.CartRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+
 import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
-import java.util.Map;
+
 
 @Repository
 public class CartDAOImpl extends BaseDAO implements CartDAO{
@@ -83,6 +80,16 @@ public class CartDAOImpl extends BaseDAO implements CartDAO{
             // If no cart item found, return null
             return null;
         }
+    }
+
+    @Override
+    public List<Cart> findByUserId(Integer userId) {
+        return List.of();
+    }
+
+    @Override
+    public void deleteByUserId(Integer userId) {
+
     }
 
 

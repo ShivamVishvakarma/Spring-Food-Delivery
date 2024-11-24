@@ -17,4 +17,8 @@ public interface CartDAO {
     void removeCartItem(Integer cart_id);
     void clearCart(Integer userId);
     Cart findCartItemByUserIdAndMenuId(Integer userId, Integer menuId);
+
+    List<Cart> findByUserId(Integer userId);
+
+    void deleteByUserId(Integer userId);
 }

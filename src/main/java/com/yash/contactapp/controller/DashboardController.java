@@ -1,6 +1,6 @@
 package com.yash.contactapp.controller;
 
-import com.yash.contactapp.service.ContactService;
+import com.yash.contactapp.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +12,12 @@ import javax.servlet.http.HttpSession;
 public class DashboardController {
 
     @Autowired
-    private ContactService contactService;
+    private RestaurantService restaurantService;
 
     @RequestMapping(value = "/user/mlist")
     public String contactList(Model m, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
-        m.addAttribute("contactList", contactService .findUserContact(userId));
+        m.addAttribute("contactList", restaurantService.findUserContact(userId));
         return "dashboard_user"; //JSP
     }
 
